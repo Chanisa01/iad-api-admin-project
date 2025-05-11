@@ -13,6 +13,29 @@ if (!file_exists($targetDir)) {
     mkdir($targetDir, 0755, true);
 }
 
+// if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+//     $id_structure = isset($_GET['id_structure']) ? intval($_GET['id_structure']) : null;
+
+//     if ($id_structure) {
+//         $sql = "SELECT image_name FROM structure WHERE id_structure = ?";
+//         $stmt = $conn->prepare($sql);
+//         $stmt->bind_param("i", $id_structure); 
+//         $stmt->execute();
+//         $result = $stmt->get_result();
+
+//         if ($result && $result->num_rows > 0) {
+//             $row = $result->fetch_assoc();
+//             echo json_encode(["success" => true, "structure" => $row]); // ✅ แก้ key "structure "
+//         } else {
+//             echo json_encode(["success" => false, "message" => "ไม่พบข้อมูล"]);
+//         }
+
+//         $stmt->close();
+//     } else {
+//         echo json_encode(["success" => false, "message" => "ไม่พบพารามิเตอร์ id_structure"]);
+//     }
+// }
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['image_name'])) {
         $file = $_FILES['image_name'];

@@ -1,15 +1,4 @@
 <?php
-header("Access-Control-Allow-Origin: http://localhost:5173");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
-header("Access-Control-Allow-Credentials: true");
-
-session_start();
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit();
-}
-
 
 class kmutnbsso
 {
@@ -26,10 +15,8 @@ class kmutnbsso
         //residence
         $this->clientId = 'm4F26kNf1gavGOtbdzdagO1FbZj0aR68'; //ขอจาก sso
         $this->clientSecret = 'RBqsfWeDJmCXnSSImZCAsrvHMUgUy6qP1hUlsjYh3vzCSHl5LK072fFp5IONHlIi'; //ขอจาก sso
-        // $this->clientId = 'WptY2qDxGi1PtvMzsUBtyNoIPsv4sVMi'; //ขอจาก sso new
-        // $this->clientSecret = 'rYGLzJegnjcfBnuWCaDtBidbSzLr2XlhZRxRm2jiw8VATqZK31VXNuMC6r0AgOBf'; //ขอจาก sso new
         // $this->redirectUri = 'https://finance.op.kmutnb.ac.th/callback.php';
-        $this->redirectUri = 'http://localhost/finance/callback.php';
+        $this->redirectUri = 'http://localhost/API_iauop/kmutnb_sso/callback.php';
         $this->authUrl = 'https://sso.kmutnb.ac.th/auth/authorize';
         $this->tokenUrl = 'https://sso.kmutnb.ac.th/auth/token';
         $this->resourceUrl = 'https://sso.kmutnb.ac.th/resources/userinfo';
@@ -57,29 +44,64 @@ class kmutnbsso
     }
 
     // Method to handle the OAuth2 callback and exchange code for an access token
-    public function handleCallback()
-    {        
+    // public function handleCallback()
+    // {        
                
-        // Check if the state parameter matches
-        if (empty($_GET['state']) || $_GET['state'] !== $_SESSION['oauth2state']) {
-            unset($_SESSION['oauth2state']);
-            exit('Invalid state');
-        }
+    //    // Check if the state parameter matches
 
-        // Exchange authorization code for an access token
-        if (isset($_GET['code'])) {
+    //     if (empty($_GET['state']) || $_GET['state'] !== $_SESSION['oauth2state']) {
+    //         unset($_SESSION['oauth2state']);
+    //         exit('Invalid state');
+    //     }
+    
+    
 
-            $accessToken = $this->getAccessToken($_GET['code']);
-            // print_r($accessToken);
-            // Get user details using the access token
-            $userDetails = $this->getUserDetails($accessToken);
+    //     // Exchange authorization code for an access token
+    //     if (isset($_GET['code'])) {
 
-            return $userDetails;
-        } else {
-            return false;
-            exit('Authorization code not provided');
-        }
+    //         $accessToken = $this->getAccessToken($_GET['code']);
+    //         //print_r($accessToken);
+    //         // Get user details using the access token
+    //         $userDetails = $this->getUserDetails($accessToken);
+
+    //         // print_r($userDetails);
+    //         $token = session_id(); // หรือจะใช้ JWT, UUID ก็ได้
+    //         header("Location: http://localhost:3000/login-success?token=" . $token);
+    //         exit;
+
+
+    //         return $userDetails;
+    //     } else {
+    //         return false;
+    //         exit('Authorization code not provided');
+    //     }
+    // }
+
+    public function handleCallback()
+{
+    // ตรวจสอบ state ป้องกัน CSRF
+    if (empty($_GET['state']) || $_GET['state'] !== $_SESSION['oauth2state']) {
+        unset($_SESSION['oauth2state']);
+        exit('Invalid state');
     }
+
+    if (isset($_GET['code'])) {
+        $accessToken = $this->getAccessToken($_GET['code']);
+        $userDetails = $this->getUserDetails($accessToken);
+
+        // ✅ Return ข้อมูลก่อน redirect (สำคัญมาก)
+        $_SESSION['__userDetails'] = $userDetails; // บันทึก session ชั่วคราวเผื่อ debug
+        return $userDetails;
+
+        // ❌ อย่า redirect ที่นี่ เพราะ callback.php ยังต้องใช้ข้อมูลก่อน
+        // header("Location: http://localhost:3000/login-success?token=" . session_id());
+        // exit();
+    } else {
+        exit('Authorization code not provided');
+    }
+}
+
+
 
     // Method to exchange the authorization code for an access token
     private function getAccessToken($authorizationCode)

@@ -1,14 +1,25 @@
 <?php 
     date_default_timezone_set('Asia/Bangkok');
 
-    // ตั้งค่า Header สำหรับ JSON และ CORS
-    header("Content-Type: application/json");
-    header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-    header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-    // print error on postman
-    error_reporting(E_ALL); 
-    ini_set('display_errors', 1);
+    $allowedOrigins = ['http://localhost:3000'];
+
+    if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowedOrigins)) {
+        header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
+    }
+    header("Access-Control-Allow-Credentials: true");
+    header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
+    header("Content-Type: application/json; charset=UTF-8");
+    
+    // ✅ 2. ถ้าเป็น OPTIONS (preflight request) ให้ตอบ 204 แล้วจบตรงนี้
+    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+        http_response_code(204);
+        exit;
+    }
+    
+    // ✅ 3. Start session หลังจากผ่าน preflight
+    session_name('PHPSESSID');
+    session_start();
 
     include 'db_connect.php';
 
@@ -24,32 +35,37 @@
     }
     // DataTable
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        $sql = "SELECT personal.*, users.name AS user_name, users.surname AS user_surname 
-                FROM personal 
-                JOIN users ON personal.updated_by = users.id"; 
-        $result = $conn->query($sql);
-
-        // if ($result && $result->num_rows > 0) {
-        //     // ใช้ fetch_all() เพื่อดึงข้อมูลทั้งหมด
-        //     $rows = $result->fetch_all(MYSQLI_ASSOC);
-        //     echo json_encode(["success" => true, "personal" => $rows]);
-        // } else {
-        //     echo json_encode(["success" => false, "message" => "ไม่พบข้อมูล"]);
-        // }
-
-        if ($result) {
-            $rows = $result->fetch_all(MYSQLI_ASSOC);
-            
-            // ส่ง `success: true` เสมอ แต่ถ้าไม่มีข้อมูลให้ personal เป็น `[]`
-            echo json_encode(["success" => true, "personal" => $rows ?: []]);
-        } else {
-            echo json_encode(["success" => false, "message" => "เกิดข้อผิดพลาดในการดึงข้อมูล", "error" => $conn->error]);
+        $category_id = isset($_GET['category_id']) ? $_GET['category_id'] : null;
+        if($category_id){
+            $sql = "SELECT personal.*, users.name AS user_name, users.surname AS user_surname, c.folder_path
+                    FROM personal 
+                    JOIN users ON personal.updated_by = users.id
+                    JOIN categories c ON personal.category_id = c.id
+                    WHERE personal.category_id = $category_id"
+                    ; 
+            $result = $conn->query($sql);
+            // var_dump($result);
+            if ($result) {
+                
+                $rows = $result->fetch_all(MYSQLI_ASSOC);
+                
+                // ส่ง `success: true` เสมอ แต่ถ้าไม่มีข้อมูลให้ personal เป็น `[]`
+                echo json_encode(["success" => true, "personal" => $rows ?: []]);
+            } else {
+                echo json_encode(["success" => false, "message" => "เกิดข้อผิดพลาดในการดึงข้อมูล", "error" => $conn->error]);
+            }
         }
 
         exit;
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (!isset($_SESSION['sess_iauop_user_id'])) {
+            echo json_encode(["success" => false, "message" => "No active session"]);
+            exit;
+        }
+        $updated_by = $_SESSION['sess_iauop_user_id'];
+
         if (isset($_POST['action'])) {
             $action = $_POST['action'];
             // var_dump("ffff",$action);
@@ -82,18 +98,26 @@
                 $stmt->close();
                 exit;
             }elseif ($action === 'insert') {
-                $prename = $_POST['prename'];
-                $name = $_POST['name'];
-                $surname = $_POST['surname'];
-                $position = $_POST['position'];
-                $department = $_POST['department'];
-                $email = $_POST['email'];
-                $phone = $_POST['phone'];
-                $extension = $_POST['extension'];
-                $updated_by = $_POST['updated_by'];
-
-                $stmt = $conn->prepare("INSERT INTO personal (prename, name, surname, position, department, email, phone, extension, updated_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param("ssssssssi", $prename, $name, $surname, $position, $department, $email, $phone, $extension, $updated_by);
+                $prename = $_POST['prename'] ?? '';
+                $name = $_POST['name'] ?? '';
+                $surname = $_POST['surname'] ?? '';
+                $position = $_POST['position'] ?? '';
+                $department = $_POST['department'] ?? '';
+                $email = $_POST['email'] ?? '';
+                $phone = $_POST['phone'] ?? '';
+                $extension = $_POST['extension'] ?? '';
+                // $updated_by = $_POST['updated_by'];
+                $id_category = $_POST['category_id'] ?? 6;
+                // $is_active = $_POST['is_active'];
+                $is_active = isset($_POST['is_active']) ? intval($_POST['is_active']) : 0;
+                $certificate = isset($_POST['certificate']) ? intval($_POST['certificate']) : 0;
+                $stmt = $conn->prepare("INSERT INTO personal 
+                                        (prename, name, surname, position, 
+                                        department, email, phone, extension, updated_by, category_id, is_active, certificate) 
+                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("ssssssssiiii", $prename, $name, $surname, $position, 
+                                            $department, $email, $phone, $extension, 
+                                            $updated_by, $id_category, $is_active, $certificate);
                 if ($stmt->execute()) {
                     $id_personal = $conn->insert_id; // รับค่า id ล่าสุดที่เพิ่มเข้าไป
                     $newFileName = null;
@@ -137,16 +161,22 @@
                 }
 
             }elseif ($action === 'update' && isset($_POST['id_personal'])) {
-                $id_personal = $_POST['id_personal'];
-                $prename = $_POST['prename'];
-                $name = $_POST['name'];
-                $surname = $_POST['surname'];
-                $position = $_POST['position'];
-                $department = $_POST['department'];
-                $email = $_POST['email'];
-                $phone = $_POST['phone'];
-                $extension = $_POST['extension'];
-                $updated_by = $_POST['updated_by'];
+                // echo "<pre>";
+                // var_dump($_POST);
+                // echo "</pre>";
+                $id_personal = $_POST['id_personal'] ?? '';
+                $prename = $_POST['prename'] ?? '';
+                $name = $_POST['name'] ?? '';
+                $surname = $_POST['surname'] ?? '';
+                $position = $_POST['position'] ?? '';
+                $department = $_POST['department'] ?? '';
+                $email = $_POST['email'] ?? '';
+                $phone = $_POST['phone'] ?? '';
+                $extension = $_POST['extension'] ?? '';
+                // $updated_by = $_POST['updated_by'];
+                // $is_active = $_POST['is_active'];
+                $is_active = isset($_POST['is_active']) ? intval($_POST['is_active']) : 0;
+                $certificate = isset($_POST['certificate']) ? intval($_POST['certificate']) : 0;
             
                 $newFileName = null;
 
@@ -196,16 +226,16 @@
                     $stmt = $conn->prepare("UPDATE personal SET 
                                             prename = ?, name = ?, surname = ?, image_personal_name = ?, 
                                             position = ?, department = ?, email = ?, 
-                                            phone = ?, extension = ?, updated_by = ?
+                                            phone = ?, extension = ?, updated_by = ?, is_active = ?, certificate = ?
                                             WHERE id_personal = ?");
-                    $stmt->bind_param("sssssssssii", $prename, $name, $surname, $newFileName, $position, $department, $email, $phone, $extension, $updated_by, $id_personal);
+                    $stmt->bind_param("sssssssssiiii", $prename, $name, $surname, $newFileName, $position, $department, $email, $phone, $extension, $updated_by, $is_active, $certificate, $id_personal);
                 } else {
                     $stmt = $conn->prepare("UPDATE personal SET prename = ?,
                                             name = ?, surname = ?, position = ?, 
                                             department = ?, email = ?, phone = ?, 
-                                            extension = ?, updated_by = ?
+                                            extension = ?, updated_by = ?, is_active = ?, certificate = ?
                                             WHERE id_personal = ?");
-                    $stmt->bind_param("ssssssssii", $prename, $name, $surname, $position, $department, $email, $phone, $extension, $updated_by, $id_personal);
+                    $stmt->bind_param("ssssssssiiii", $prename, $name, $surname, $position, $department, $email, $phone, $extension, $updated_by, $is_active, $certificate, $id_personal);
                 }
             
                 if ($stmt->execute()) {
