@@ -21,8 +21,11 @@ session_start();
 
 include 'db_connect.php';
 
-$targetDir = "document/faqs/";
+$targetDir = "document/information/faqs/";
 $method = $_SERVER['REQUEST_METHOD'];
+
+// $updated_by = 58; //sso พัง เดี๋ยวมาลบ
+
 
 function cleanFilename($filename) {
     return uniqid() . "_" . preg_replace("/[^A-Za-z0-9\-_\.]/", '_', basename($filename));

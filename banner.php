@@ -27,6 +27,8 @@ include 'db_connect.php';
 $targetDir = "img/banner/";
 $method = $_SERVER['REQUEST_METHOD'];
 
+// $updated_by = 58;
+
 if ($method === 'GET') {
     // $sql = "SELECT b.*, u.prename, u.name, u.surname
     //         FROM banner b
@@ -52,7 +54,7 @@ if ($method === 'POST') {
         exit;
     }
     $updated_by = $_SESSION['sess_iauop_user_id'];
-
+    
     // ✅ INSERT
     if ($action === 'insert') {
         $is_active = $_POST['is_active'];
@@ -174,10 +176,10 @@ if ($method === 'POST') {
     }
 
     if ($action === 'update_order') {
-        if (!isset($_SESSION['sess_iauop_user_id'])) {
-            echo json_encode(["success" => false, "message" => "No active session"]);
-            exit;
-        }
+        // if (!isset($_SESSION['sess_iauop_user_id'])) {
+        //     echo json_encode(["success" => false, "message" => "No active session"]);
+        //     exit;
+        // }
     
         $orderList = json_decode($_POST['orderList'] ?? '[]', true);
         if (!is_array($orderList)) {

@@ -1,0 +1,23 @@
+Array
+(
+    [oauth2state] => cdd1d2e6242a6eaa72f6a53d99e89d6d
+    [__userDetails] => Array
+        (
+            [profile] => Array
+                (
+                    [username] => chanisaa
+                    [display_name] => ฌานิศา อิ่มลิ้มทาน
+                    [name_en] => Chanisa Aimlimthan
+                    [account_type] => personnel
+                )
+
+        )
+
+    [sess_iauop_user_id] => 57
+    [sess_iauop_username] => chanisaa
+    [sess_iauop_name] => ฌานิศา
+    [sess_iauop_surname] => อิ่มลิ้มทาน
+    [sess_iauop_name_en] => Chanisa
+    [sess_iauop_surname_en] => Aimlimthan
+    [sess_iauop_user_group_id] => 1
+)
