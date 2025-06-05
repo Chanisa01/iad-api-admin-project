@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 05, 2025 at 08:01 AM
+-- Generation Time: Jun 05, 2025 at 08:40 AM
 -- Server version: 8.0.17
 -- PHP Version: 7.3.10
 
@@ -83,6 +83,18 @@ CREATE TABLE `article` (
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_by` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `article`
+--
+
+INSERT INTO `article` (`id_article`, `category_id`, `description_th`, `image_name`, `original_name`, `updated_at`, `updated_by`) VALUES
+(1, 12, '<ol><li>เมื่อวันที่ 19 สิงหาคม 2519 รัฐบาลกำหนดให้ส่วนราชการมีผู้ตรวจสอบกายในมีสายการบังคับบัญชาขึ้นตรงต่อหัวหน้าส่วนราชการ ซึ่งแต่งตั้งจากนักวิชาการเงินและบัญชี การตรวจสอบจะมุ่งมั่นทางทางการเงินและบัญชี ในปี พ.ศ. 2539 มีงานตรวจสอบภายใน ทำหน้าที่ตรวจสอบกิจการทั้งปวงของมหาวิทยาลัย</li></ol><ul><li>ในปี พ.ศ. 2550 มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือมีฐานะเป็นหน่วยงานในกำกับของรัฐตามพระราชบัญญัติมหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ พ.ศ. 2550 โดยมีสภามหาวิทยาลัยทำหน้าที่ควบคุม ดูแล การดำเนินงานของมหาวิทยาลัย ซึ่งตามมาตรา 49 ให้มหาวิทยาลัยจัดให้มีระบบการตรวจสอบภายในเพื่อตรวจสอบการดำเนินการต่าง ๆ ของมหาวิทยาลัย</li><li>22 กุมภาพันธ์ 2555 สภามหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ มีมติอนุมัติจัดตั้งหน่วยตรวจสอบภายใน (Internal Audit Unit) เป็นหน่วยงานระดับกอง สังกัดสำนักงานอธิการบดี</li></ul>', NULL, NULL, '2025-06-04 15:38:07', 57),
+(2, 13, '<ul><li>สร้างความเชื่อมั่นด้านการตรวจสอบ ด้วยแนวทางที่ทันสมัย ตามมาตรฐานสากล</li></ul>', NULL, NULL, '2025-05-06 08:23:12', 57),
+(3, 14, '<ul><li>ประเมินระบบการควบคุมภายในและสอบทานการปฎิบัติงานเพื่อให้ผู้บริหารเกิดความเชื่อมั่นว่าการปฎิบัติงานเป็นไปตามวัตถุประสงค์ เป้าหมาย และสอดคล้องกับนโยบายของมหาวิทยาลัย</li></ul>', NULL, NULL, '2025-06-04 08:51:14', 57),
+(4, 15, '<ul><li>ตรวจสอบด้วยกัลยาณมิตร เกิดผลสัมฤทธิ์ตามเป้าหมาย</li></ul>', NULL, NULL, '2025-06-04 08:51:11', 57),
+(5, 16, '', 'structure_683fa6ccd1278.png', 'OrgChart.png', '2025-06-04 08:52:12', 57),
+(6, 11, '', NULL, NULL, '2025-05-06 11:19:11', 57);
 
 -- --------------------------------------------------------
 
@@ -182,6 +194,13 @@ CREATE TABLE `complaints` (
   `updated_by` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `complaints`
+--
+
+INSERT INTO `complaints` (`id`, `full_name`, `email`, `phone_number`, `complaint_type`, `description`, `acknowledgement`, `status`, `submitted_at`, `updated_by`) VALUES
+(34, 'นางสาวทดสอบ ขอไม่ระบุตัวตน', '', '', 'ข้อเสนอแนะ', 'อยากให้เพิ่มระบบการร้องเรียน', 1, 'Investigating', '2025-06-05 15:05:51', 57);
+
 -- --------------------------------------------------------
 
 --
@@ -219,15 +238,6 @@ CREATE TABLE `document_composition` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `document_composition`
---
-
-INSERT INTO `document_composition` (`id`, `title`, `file_name`, `category_id`, `updated_by`, `uploaded_at`, `is_active`, `group_year_start`, `group_year_end`) VALUES
-(5, 'วาระที่ 2558 ถึง 2564', 'document_1746505340_68198e7c7b424.pdf', 11, 57, '2025-04-30', 1, 2558, 2560),
-(6, 'วาระที่ 2560 ถึง 2561', 'document_1746505385_68198ea94428f.pdf', 11, 57, '2025-05-01', 1, 2560, 2561),
-(8, 'วาระที่ 2562 ถึง 2564', 'document_1746775677_681dae7de55b0.pdf', 11, 57, '2025-05-08', 1, 2562, 2564);
-
 -- --------------------------------------------------------
 
 --
@@ -242,15 +252,6 @@ CREATE TABLE `event_banner` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_by` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `event_banner`
---
-
-INSERT INTO `event_banner` (`id_event`, `image_name`, `original_name`, `is_active`, `updated_at`, `updated_by`) VALUES
-(10, 'event_681999348f7a9.png', 'event_banner1.png', 0, '2025-06-05 03:48:55', 57),
-(11, 'event_681999424aff3.png', 'event_banner2.png', 0, '2025-06-05 03:48:55', 57),
-(12, 'event_6819b53f77c98.png', 'event_banner2.png', 0, '2025-06-05 03:48:55', 57);
 
 -- --------------------------------------------------------
 
@@ -338,7 +339,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `pid`, `name`, `surname`, `name_en`, `surname_en`, `prename`, `icit_username`, `user_group_id`, `last_login`, `first_login`, `person_photo`, `is_active`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(57, '1729900557095', 'ฌานิศา', 'อิ่มลิ้มทาน', 'Chanisa', 'Aimlimthan', '', 'chanisaa', 1, '2025-06-05 13:22:04', '2025-02-05 06:55:49', '', 1, NULL, NULL, '2025-05-05 01:15:42', 57),
+(57, '1729900557095', 'ฌานิศา', 'อิ่มลิ้มทาน', 'Chanisa', 'Aimlimthan', '', 'chanisaa', 1, '2025-06-05 15:13:11', '2025-02-05 06:55:49', '', 1, NULL, NULL, '2025-05-05 01:15:42', 57),
 (58, '1729900557094', 'ทดสอบ', 'ทดสอบ', NULL, NULL, '', 'pimpikaa', 2, NULL, '2025-02-26 07:09:56', NULL, 1, NULL, NULL, '2025-05-05 23:26:50', 57);
 
 -- --------------------------------------------------------
@@ -550,7 +551,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `complaints`
 --
 ALTER TABLE `complaints`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `document`
@@ -592,7 +593,7 @@ ALTER TABLE `personal`
 -- AUTO_INCREMENT for table `visitor_logs`
 --
 ALTER TABLE `visitor_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=837;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=839;
 
 --
 -- AUTO_INCREMENT for table `websites`
