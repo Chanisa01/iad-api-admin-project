@@ -42,7 +42,11 @@ function deleteImageIfExists($conn, $id) {
 
 if ($method === 'GET') {
     $category_id = $_GET['category_id'] ?? 7;
-    $sql = "SELECT * FROM audit_committee WHERE category_id = ? ORDER BY group_year_start DESC, id_committee DESC";
+    $sql = "SELECT * , g.group_name
+            FROM audit_committee 
+            JOIN audit_committee_group g ON audit_committee.position1 = g.id
+            WHERE category_id = ? 
+            ORDER BY group_year_start DESC, id_committee DESC";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $category_id);
     $stmt->execute();

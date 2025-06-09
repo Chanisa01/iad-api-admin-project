@@ -37,12 +37,14 @@
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $category_id = isset($_GET['category_id']) ? $_GET['category_id'] : null;
         if($category_id){
-            $sql = "SELECT personal.*, users.name AS user_name, users.surname AS user_surname, c.folder_path
+            $sql = "SELECT personal.*, users.name AS user_name, users.surname AS user_surname, c.folder_path, g.group_name
                     FROM personal 
                     JOIN users ON personal.updated_by = users.id
                     JOIN categories c ON personal.category_id = c.id
-                    WHERE personal.category_id = $category_id"
-                    ; 
+                    JOIN personal_group  g ON personal.department = g.id
+                    WHERE personal.category_id = $category_id
+                    ORDER BY g.display_order ASC
+                    "; 
             $result = $conn->query($sql);
             // var_dump($result);
             if ($result) {
