@@ -25,6 +25,53 @@ ini_set('display_errors', 1);
 
 $method = $_SERVER['REQUEST_METHOD'];
 
+function slugify($text) {
+    // แปลงเป็นตัวพิมพ์เล็ก
+    $text = strtolower(trim($text));
+
+    // แทนที่ space และ underscore ด้วย -
+    $text = preg_replace('/[\s_]+/', '-', $text);
+
+    // ลบอักขระพิเศษ ยกเว้น - และ ตัวอักษรภาษาไทย
+    $text = preg_replace('/[^\w\-ก-๙]+/u', '', $text);
+
+    // ลบ - ซ้ำ
+    $text = preg_replace('/\-+/', '-', $text);
+
+    return trim($text, '-');
+}
+
+function generateUniqueSlug($title, $conn, $existingId = null) {
+    $baseSlug = slugify($title);
+    $slug = $baseSlug;
+    $i = 1;
+
+    while (true) {
+        // ตรวจสอบว่า slug นี้ซ้ำหรือไม่
+        $query = "SELECT id FROM activities WHERE slug = ?";
+        $params = [$slug];
+
+        if ($existingId) {
+            $query .= " AND id != ?";
+            $params[] = $existingId;
+        }
+
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param(str_repeat("s", count($params)), ...$params);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 0) {
+            // ไม่ซ้ำ → ใช้ได้
+            return $slug;
+        }
+
+        // ซ้ำ → เพิ่ม -1, -2, -3 ...
+        $slug = $baseSlug . '-' . $i;
+        $i++;
+    }
+}
+
 // ================== GET Activities ==================
 if ($method === 'GET') {
     $category_id = $_GET['category_id'] ?? null;
@@ -103,10 +150,12 @@ if ($method === 'POST') {
             $coverExt = strtolower(pathinfo($cover['name'], PATHINFO_EXTENSION));
             $newCoverName = uniqid('cover_') . '.' . $coverExt;
             move_uploaded_file($cover['tmp_name'], $imgFolder . $newCoverName);
+            $slug = generateUniqueSlug($title, $conn);
 
-            $stmt = $conn->prepare("INSERT INTO activities (category_id, title, cover, description, uploaded_at, updated_by, is_active) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("issssii", $category_id, $title, $newCoverName, $description, $uploaded_at, $updated_by, $is_active);
-
+            // $stmt = $conn->prepare("INSERT INTO activities (category_id, title, cover, description, uploaded_at, updated_by, is_active) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            // $stmt->bind_param("issssii", $category_id, $title, $newCoverName, $description, $uploaded_at, $updated_by, $is_active);
+            $stmt = $conn->prepare("INSERT INTO activities (category_id, title, slug, cover, description, uploaded_at, updated_by, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("isssssii", $category_id, $title, $slug, $newCoverName, $description, $uploaded_at, $updated_by, $is_active);
             if ($stmt->execute()) {
                 $activities_id = $stmt->insert_id;
                 handleUploadImagesAndFiles($activities_id, $imgFolder, $docFolder);
@@ -135,11 +184,12 @@ if ($method === 'POST') {
                 $newCoverName = uniqid('cover_') . '.' . $coverExt;
                 move_uploaded_file($cover['tmp_name'], $imgFolder . $newCoverName);
             }
-
+            $slug = generateUniqueSlug($title, $conn, $id);
             // อัปเดตฐานข้อมูล
-            $stmt = $conn->prepare("UPDATE activities SET title=?, description=?, uploaded_at=?, category_id=?, cover=?, updated_by=?, is_active=? WHERE id=?");
-            $stmt->bind_param("ssssssii", $title, $description, $uploaded_at, $category_id, $newCoverName, $updated_by, $is_active, $id);
-
+            // $stmt = $conn->prepare("UPDATE activities SET title=?, description=?, uploaded_at=?, category_id=?, cover=?, updated_by=?, is_active=? WHERE id=?");
+            // $stmt->bind_param("ssssssii", $title, $description, $uploaded_at, $category_id, $newCoverName, $updated_by, $is_active, $id);
+            $stmt = $conn->prepare("UPDATE activities SET title=?, slug=?, description=?, uploaded_at=?, category_id=?, cover=?, updated_by=?, is_active=? WHERE id=?");
+            $stmt->bind_param("ssssssiii", $title, $slug, $description, $uploaded_at, $category_id, $newCoverName, $updated_by, $is_active, $id);
             if ($stmt->execute()) {
                 echo json_encode(["success" => true, "message" => "Update successful"]);
             } else {
