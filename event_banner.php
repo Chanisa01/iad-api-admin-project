@@ -2,10 +2,13 @@
 // ini_set('display_errors', 1);
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
-$allowedOrigins = ['http://localhost:3000'];
+$config = include __DIR__ . '/config_cors.php';
+$allowedOrigins = $config['ALLOWED_ORIGINS'];
 
-if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowedOrigins)) {
-    header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+
+if (in_array(rtrim($origin, '/'), $allowedOrigins)) {
+    header("Access-Control-Allow-Origin: $origin");
 }
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");

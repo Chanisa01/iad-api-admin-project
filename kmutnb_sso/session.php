@@ -1,5 +1,6 @@
 <?php
-$allowedOrigins = ['http://localhost:3000'];
+$config = include __DIR__ . '/config.php';
+$allowedOrigins = [$config['FRONTEND_URL']];
 
 if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowedOrigins)) {
     header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);

@@ -1,7 +1,7 @@
 <?php
 include 'kmutnbsso.php';
 include __DIR__ . "/../db_connect.php";  // ← ถ้า db_connect.php อยู่ข้างนอกโฟลเดอร์ kmutnb_sso
-
+$config = include __DIR__ . '/config.php';
 
 
 ini_set('display_errors', 1);
@@ -14,17 +14,21 @@ ini_set('session.cookie_path', '/');
 ini_set('session.cookie_domain', 'localhost');
 session_start();
 
+$frontend_redirect = $_SESSION['frontend_redirect'] ?? 'http://localhost:3000/login-success';
+
 // ✅ เรียกใช้งาน SSO
 $auth = new kmutnbsso();
 
 // ✅ ตรวจสอบ code จาก SSO
 if (!isset($_GET['code'])) {
     if (isset($_GET['error']) && $_GET['error'] === "access_denied") {
-        header("Location: http://localhost:3000/login?action=notallow");
+        // header("Location: http://localhost:3000/login?action=notallow");
+        header("Location: {$frontend_redirect}?action=notallow");
         http_response_code(302);
         exit;
     }
-    header("Location: http://localhost:3000/login?error=missing_code");
+    // header("Location: http://localhost:3000/login?error=missing_code");
+    header("Location: {$frontend_redirect}?error=missing_code");
     http_response_code(302);
     exit;
 }
@@ -35,7 +39,8 @@ file_put_contents('debug_userdetails.log', print_r($userDetails, true));
 
 // ❌ ไม่ได้ข้อมูลที่จำเป็น
 if (!$userDetails || !isset($userDetails['profile']['username'])) {
-    header("Location: http://localhost:3000/login?error=userinfo_missing");
+    // header("Location: http://localhost:3000/login?error=userinfo_missing");
+    header("Location: {$frontend_redirect}?error=userinfo_missing");
     http_response_code(302);
     exit;
 }
@@ -96,18 +101,22 @@ if ($result->num_rows === 1) {
 
     // ✅ ตรวจสอบสิทธิ์
     if ((int)$user["user_group_id"] === 3) {
-        header("Location: http://localhost:3000/login?unauthorized=1");
+        // header("Location: http://localhost:3000/login?unauthorized=1");
+        header("Location: {$frontend_redirect}?unauthorized=1");
         http_response_code(302);
         exit;
     }
 
     // ✅ เข้าสู่ระบบสำเร็จ
-    header("Location: http://localhost:3000/login-success");
+    $token = session_id();
+    $_SESSION['sso_token'] = $token;
+    header("Location: {$frontend_redirect}?token=" . urlencode($token));
+    // header("Location: http://localhost:3000/login-success");
     http_response_code(302);
     exit;
 } else {
     // ❌ ไม่พบผู้ใช้งานในระบบ
-    header("Location: http://localhost:3000/login?unauthorized=1");
+    header("Location: {$frontend_redirect}?unauthorized=2");
     http_response_code(302);
     exit;
 }
