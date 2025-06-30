@@ -1,17 +1,24 @@
 <?php
-session_start();
-require_once __DIR__ . '/SSOClient.php';
-$config = include __DIR__ . '/config.php';
+    // ไฟล์ authentication.php (แก้ไข - ใช้สำหรับการ redirect โดยตรง)
+    if (session_status() === PHP_SESSION_NONE) {
+        session_name('PHPSESSID');
+        ini_set('session.cookie_path', '/');
+        ini_set('session.cookie_domain', 'iau.op.kmutnb.ac.th');
+        session_start();
+    }
 
-$redirectUri = $_GET['redirect_uri'] ?? null;
-$frontendRedirect = $_GET['frontend_redirect'] ?? $config['FRONTEND_URL'] . '/login-success';
+    $config = include __DIR__ . '/config.php';
 
-session_start();
-if ($frontendRedirect) {
-    $_SESSION['frontend_redirect'] = $frontendRedirect;
-}
+    // ✅ รับ parameter ที่ส่งมา
+    $frontendRedirect = $_GET['frontend_redirect'] ?? $config['FRONTEND_URL'] . '/login-success';
 
-$sso = new SSOClient($redirectUri);
-header("Location: " . $sso->getLoginUrl());
-exit;
+    // ✅ เก็บ frontend_redirect ใน session
+    if ($frontendRedirect) {
+        $_SESSION['frontend_redirect'] = $frontendRedirect;
+    }
+
+    require_once 'kmutnbsso.php';
+
+    $sso = new kmutnbsso();
+    $sso->getAuthorizationUrl(); // จะ redirect ไปที่ SSO โดยอัตโนมัติ
 ?>

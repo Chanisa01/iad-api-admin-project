@@ -9,3 +9,309 @@ Array
         )
 
 )
+2025-06-23 01:37:15 - Array
+(
+    [profile] => Array
+        (
+            [username] => chanisaa
+            [display_name] => ฌานิศา อิ่มลิ้มทาน
+            [name_en] => Chanisa Aimlimthan
+            [account_type] => personnel
+            [pid] => 1729900557095
+        )
+
+    [personnel_info] => Array
+        (
+            [person_key] => 2502058105224
+            [full_prefix_name_th] => นางสาว
+            [firstname_th] => ฌานิศา
+            [lastname_th] => อิ่มลิ้มทาน
+            [firstname_en] => CHANISA
+            [lastname_en] => AIMLIMTHAN
+            [personnel_type_id] => 4
+            [personnel_type_name] => พนักงานพิเศษ
+            [position_id] => 10
+            [position_name] => นักวิชาการคอมพิวเตอร์
+            [position_type_id] => 2
+            [position_type_th] => สนับสนุนวิชาการ
+            [faculty_code] => 99
+            [faculty_name] => สำนักงานอธิการบดี
+            [department_code] => 9918
+            [department_name] => กองส่งเสริมวิชาการ
+            [photo] => https://api.hris.kmutnb.ac.th/api/helpers/person-photo?data=BVE4A102JUwkHlxxDQJgBgBtWgF%252FQQRpWh5zBVJjVSFAF1VnFAU8GAllFQF%252BUgVlREU9A1JvQQVrXQNxVANqQHBBRAdsE14xH1clKFEoVl81C0ULHUQ9LFQpAQ%253D%253D
+        )
+
+)
+
+2025-06-23 01:37:29 - Array
+(
+    [profile] => Array
+        (
+            [username] => chanisaa
+            [display_name] => ฌานิศา อิ่มลิ้มทาน
+            [name_en] => Chanisa Aimlimthan
+            [account_type] => personnel
+            [pid] => 1729900557095
+        )
+
+    [personnel_info] => Array
+        (
+            [person_key] => 2502058105224
+            [full_prefix_name_th] => นางสาว
+            [firstname_th] => ฌานิศา
+            [lastname_th] => อิ่มลิ้มทาน
+            [firstname_en] => CHANISA
+            [lastname_en] => AIMLIMTHAN
+            [personnel_type_id] => 4
+            [personnel_type_name] => พนักงานพิเศษ
+            [position_id] => 10
+            [position_name] => นักวิชาการคอมพิวเตอร์
+            [position_type_id] => 2
+            [position_type_th] => สนับสนุนวิชาการ
+            [faculty_code] => 99
+            [faculty_name] => สำนักงานอธิการบดี
+            [department_code] => 9918
+            [department_name] => กองส่งเสริมวิชาการ
+            [photo] => https://api.hris.kmutnb.ac.th/api/helpers/person-photo?data=BVE4A102JUwkHlxxDQJgBgBtWgF%252FQQRpWh5zBVJjVSFAF1VnFAU8GAllFQF%252BUgVlREU9A1JvQQVrXQNxVANqQHBBRwxsE14xH1clKFEoVl81C0ULHUQ9LFQpAQ%253D%253D
+        )
+
+)
+
+2025-06-26 07:23:22 - Array
+(
+    [profile] => Array
+        (
+            [username] => chanisaa
+            [display_name] => ฌานิศา อิ่มลิ้มทาน
+            [name_en] => Chanisa Aimlimthan
+            [account_type] => personnel
+            [pid] => 1729900557095
+        )
+
+    [personnel_info] => Array
+        (
+            [person_key] => 2502058105224
+            [full_prefix_name_th] => นางสาว
+            [firstname_th] => ฌานิศา
+            [lastname_th] => อิ่มลิ้มทาน
+            [firstname_en] => CHANISA
+            [lastname_en] => AIMLIMTHAN
+            [personnel_type_id] => 4
+            [personnel_type_name] => พนักงานพิเศษ
+            [position_id] => 10
+            [position_name] => นักวิชาการคอมพิวเตอร์
+            [position_type_id] => 2
+            [position_type_th] => สนับสนุนวิชาการ
+            [faculty_code] => 99
+            [faculty_name] => สำนักงานอธิการบดี
+            [department_code] => 9918
+            [department_name] => กองส่งเสริมวิชาการ
+            [photo] => https://api.hris.kmutnb.ac.th/api/helpers/person-photo?data=BVE4A102JUwkHlxxDQJgBgBtWgF%252FQQRpWh5zBVJjVSFAF1VnFAU8GAllFQF%252BUgVlREU9A1JvQQVrXQNxVAZrTHFFRwVsE14xH1clKFEoVl81C0ULHUQ9LFQpAQ%253D%253D
+        )
+
+)
+
+2025-06-26 07:27:09 - Array
+(
+    [profile] => Array
+        (
+            [username] => chanisaa
+            [display_name] => ฌานิศา อิ่มลิ้มทาน
+            [name_en] => Chanisa Aimlimthan
+            [account_type] => personnel
+            [pid] => 1729900557095
+        )
+
+    [personnel_info] => Array
+        (
+            [person_key] => 2502058105224
+            [full_prefix_name_th] => นางสาว
+            [firstname_th] => ฌานิศา
+            [lastname_th] => อิ่มลิ้มทาน
+            [firstname_en] => CHANISA
+            [lastname_en] => AIMLIMTHAN
+            [personnel_type_id] => 4
+            [personnel_type_name] => พนักงานพิเศษ
+            [position_id] => 10
+            [position_name] => นักวิชาการคอมพิวเตอร์
+            [position_type_id] => 2
+            [position_type_th] => สนับสนุนวิชาการ
+            [faculty_code] => 99
+            [faculty_name] => สำนักงานอธิการบดี
+            [department_code] => 9918
+            [department_name] => กองส่งเสริมวิชาการ
+            [photo] => https://api.hris.kmutnb.ac.th/api/helpers/person-photo?data=BVE4A102JUwkHlxxDQJgBgBtWgF%252FQQRpWh5zBVJjVSFAF1VnFAU8GAllFQF%252BUgVlREU9A1JvQQVrXQNxVAZrTHFBRQxsE14xH1clKFEoVl81C0ULHUQ9LFQpAQ%253D%253D
+        )
+
+)
+
+2025-06-27 06:59:58 - Array
+(
+    [profile] => Array
+        (
+            [username] => chanisaa
+            [display_name] => ฌานิศา อิ่มลิ้มทาน
+            [name_en] => Chanisa Aimlimthan
+            [account_type] => personnel
+            [pid] => 1729900557095
+        )
+
+    [personnel_info] => Array
+        (
+            [person_key] => 2502058105224
+            [full_prefix_name_th] => นางสาว
+            [firstname_th] => ฌานิศา
+            [lastname_th] => อิ่มลิ้มทาน
+            [firstname_en] => CHANISA
+            [lastname_en] => AIMLIMTHAN
+            [personnel_type_id] => 4
+            [personnel_type_name] => พนักงานพิเศษ
+            [position_id] => 10
+            [position_name] => นักวิชาการคอมพิวเตอร์
+            [position_type_id] => 2
+            [position_type_th] => สนับสนุนวิชาการ
+            [faculty_code] => 99
+            [faculty_name] => สำนักงานอธิการบดี
+            [department_code] => 9918
+            [department_name] => กองส่งเสริมวิชาการ
+            [photo] => https://api.hris.kmutnb.ac.th/api/helpers/person-photo?data=BVE4A102JUwkHlxxDQJgBgBtWgF%252FQQRpWh5zBVJjVSFAF1VnFAU8GAllFQF%252BUgVlREU9A1JvQQVrXQNxVAdrS3ZPQAxsE14xH1clKFEoVl81C0ULHUQ9LFQpAQ%253D%253D
+        )
+
+)
+
+2025-06-30 01:19:10 - Array
+(
+    [profile] => Array
+        (
+            [username] => chanisaa
+            [display_name] => ฌานิศา อิ่มลิ้มทาน
+            [name_en] => Chanisa Aimlimthan
+            [account_type] => personnel
+            [pid] => 1729900557095
+        )
+
+    [personnel_info] => Array
+        (
+            [person_key] => 2502058105224
+            [full_prefix_name_th] => นางสาว
+            [firstname_th] => ฌานิศา
+            [lastname_th] => อิ่มลิ้มทาน
+            [firstname_en] => CHANISA
+            [lastname_en] => AIMLIMTHAN
+            [personnel_type_id] => 4
+            [personnel_type_name] => พนักงานพิเศษ
+            [position_id] => 10
+            [position_name] => นักวิชาการคอมพิวเตอร์
+            [position_type_id] => 2
+            [position_type_th] => สนับสนุนวิชาการ
+            [faculty_code] => 99
+            [faculty_name] => สำนักงานอธิการบดี
+            [department_code] => 9918
+            [department_name] => กองส่งเสริมวิชาการ
+            [photo] => https://api.hris.kmutnb.ac.th/api/helpers/person-photo?data=BVE4A102JUwkHlxxDQJgBgBtWgF%252FQQRpWh5zBVJjVSFAF1VnFAU8GAllFQF%252BUgVlREU9A1JvQQVrXQNxVQBqQHJPRQxsE14xH1clKFEoVl81C0ULHUQ9LFQpAQ%253D%253D
+        )
+
+)
+
+2025-06-30 03:26:14 - Array
+(
+    [profile] => Array
+        (
+            [username] => chanisaa
+            [display_name] => ฌานิศา อิ่มลิ้มทาน
+            [name_en] => Chanisa Aimlimthan
+            [account_type] => personnel
+            [pid] => 1729900557095
+        )
+
+    [personnel_info] => Array
+        (
+            [person_key] => 2502058105224
+            [full_prefix_name_th] => นางสาว
+            [firstname_th] => ฌานิศา
+            [lastname_th] => อิ่มลิ้มทาน
+            [firstname_en] => CHANISA
+            [lastname_en] => AIMLIMTHAN
+            [personnel_type_id] => 4
+            [personnel_type_name] => พนักงานพิเศษ
+            [position_id] => 10
+            [position_name] => นักวิชาการคอมพิวเตอร์
+            [position_type_id] => 2
+            [position_type_th] => สนับสนุนวิชาการ
+            [faculty_code] => 99
+            [faculty_name] => สำนักงานอธิการบดี
+            [department_code] => 9918
+            [department_name] => กองส่งเสริมวิชาการ
+            [photo] => https://api.hris.kmutnb.ac.th/api/helpers/person-photo?data=BVE4A102JUwkHlxxDQJgBgBtWgF%252FQQRpWh5zBVJjVSFAF1VnFAU8GAllFQF%252BUgVlREU9A1JvQQVrXQNxVQBrSHFARAdsE14xH1clKFEoVl81C0ULHUQ9LFQpAQ%253D%253D
+        )
+
+)
+
+2025-06-30 03:26:29 - Array
+(
+    [profile] => Array
+        (
+            [username] => chanisaa
+            [display_name] => ฌานิศา อิ่มลิ้มทาน
+            [name_en] => Chanisa Aimlimthan
+            [account_type] => personnel
+            [pid] => 1729900557095
+        )
+
+    [personnel_info] => Array
+        (
+            [person_key] => 2502058105224
+            [full_prefix_name_th] => นางสาว
+            [firstname_th] => ฌานิศา
+            [lastname_th] => อิ่มลิ้มทาน
+            [firstname_en] => CHANISA
+            [lastname_en] => AIMLIMTHAN
+            [personnel_type_id] => 4
+            [personnel_type_name] => พนักงานพิเศษ
+            [position_id] => 10
+            [position_name] => นักวิชาการคอมพิวเตอร์
+            [position_type_id] => 2
+            [position_type_th] => สนับสนุนวิชาการ
+            [faculty_code] => 99
+            [faculty_name] => สำนักงานอธิการบดี
+            [department_code] => 9918
+            [department_name] => กองส่งเสริมวิชาการ
+            [photo] => https://api.hris.kmutnb.ac.th/api/helpers/person-photo?data=BVE4A102JUwkHlxxDQJgBgBtWgF%252FQQRpWh5zBVJjVSFAF1VnFAU8GAllFQF%252BUgVlREU9A1JvQQVrXQNxVQBrSHFARwxsE14xH1clKFEoVl81C0ULHUQ9LFQpAQ%253D%253D
+        )
+
+)
+
+2025-06-30 07:18:55 - Array
+(
+    [profile] => Array
+        (
+            [username] => chanisaa
+            [display_name] => ฌานิศา อิ่มลิ้มทาน
+            [name_en] => Chanisa Aimlimthan
+            [account_type] => personnel
+            [pid] => 1729900557095
+        )
+
+    [personnel_info] => Array
+        (
+            [person_key] => 2502058105224
+            [full_prefix_name_th] => นางสาว
+            [firstname_th] => ฌานิศา
+            [lastname_th] => อิ่มลิ้มทาน
+            [firstname_en] => CHANISA
+            [lastname_en] => AIMLIMTHAN
+            [personnel_type_id] => 4
+            [personnel_type_name] => พนักงานพิเศษ
+            [position_id] => 10
+            [position_name] => นักวิชาการคอมพิวเตอร์
+            [position_type_id] => 2
+            [position_type_th] => สนับสนุนวิชาการ
+            [faculty_code] => 99
+            [faculty_name] => สำนักงานอธิการบดี
+            [department_code] => 9918
+            [department_name] => กองส่งเสริมวิชาการ
+            [photo] => https://api.hris.kmutnb.ac.th/api/helpers/person-photo?data=BVE4A102JUwkHlxxDQJgBgBtWgF%252FQQRpWh5zBVJjVSFAF1VnFAU8GAllFQF%252BUgVlREU9A1JvQQVrXQNxVQBrTHJOQAdsE14xH1clKFEoVl81C0ULHUQ9LFQpAQ%253D%253D
+        )
+
+)
+

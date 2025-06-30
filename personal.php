@@ -116,13 +116,14 @@
                 // $is_active = $_POST['is_active'];
                 $is_active = isset($_POST['is_active']) ? intval($_POST['is_active']) : 0;
                 $certificate = isset($_POST['certificate']) ? intval($_POST['certificate']) : 0;
+                $types_cert = $_POST['types_cert'] ?? '';
                 $stmt = $conn->prepare("INSERT INTO personal 
                                         (prename, name, surname, position, 
-                                        department, email, phone, extension, updated_by, category_id, is_active, certificate) 
-                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param("ssssssssiiii", $prename, $name, $surname, $position, 
+                                        department, email, phone, extension, updated_by, category_id, is_active, certificate, types_cert) 
+                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("ssssssssiiiis", $prename, $name, $surname, $position, 
                                             $department, $email, $phone, $extension, 
-                                            $updated_by, $id_category, $is_active, $certificate);
+                                            $updated_by, $id_category, $is_active, $certificate, $types_cert);
                 if ($stmt->execute()) {
                     $id_personal = $conn->insert_id; // รับค่า id ล่าสุดที่เพิ่มเข้าไป
                     $newFileName = null;
@@ -182,7 +183,8 @@
                 // $is_active = $_POST['is_active'];
                 $is_active = isset($_POST['is_active']) ? intval($_POST['is_active']) : 0;
                 $certificate = isset($_POST['certificate']) ? intval($_POST['certificate']) : 0;
-            
+                $types_cert = $_POST['types_cert'] ?? '';
+
                 $newFileName = null;
 
                 // ดึงชื่อไฟล์รูปเก่าจากฐานข้อมูล
@@ -229,18 +231,21 @@
                 //var_dump('dddd test alret');
                 if ($newFileName) {
                     $stmt = $conn->prepare("UPDATE personal SET 
-                                            prename = ?, name = ?, surname = ?, image_personal_name = ?, 
-                                            position = ?, department = ?, email = ?, 
-                                            phone = ?, extension = ?, updated_by = ?, is_active = ?, certificate = ?
-                                            WHERE id_personal = ?");
-                    $stmt->bind_param("sssssssssiiii", $prename, $name, $surname, $newFileName, $position, $department, $email, $phone, $extension, $updated_by, $is_active, $certificate, $id_personal);
+                        prename = ?, name = ?, surname = ?, image_personal_name = ?, 
+                        position = ?, department = ?, email = ?, 
+                        phone = ?, extension = ?, updated_by = ?, is_active = ?, 
+                        certificate = ?, types_cert = ?
+                        WHERE id_personal = ?");
+                    $stmt->bind_param("sssssssssiiisi", $prename, $name, $surname, $newFileName, $position, $department, $email, $phone, $extension, $updated_by, $is_active, $certificate, $types_cert, $id_personal);
+
                 } else {
-                    $stmt = $conn->prepare("UPDATE personal SET prename = ?,
-                                            name = ?, surname = ?, position = ?, 
-                                            department = ?, email = ?, phone = ?, 
-                                            extension = ?, updated_by = ?, is_active = ?, certificate = ?
-                                            WHERE id_personal = ?");
-                    $stmt->bind_param("ssssssssiiii", $prename, $name, $surname, $position, $department, $email, $phone, $extension, $updated_by, $is_active, $certificate, $id_personal);
+                    $stmt = $conn->prepare("UPDATE personal SET 
+                        prename = ?, name = ?, surname = ?, position = ?, 
+                        department = ?, email = ?, phone = ?, 
+                        extension = ?, updated_by = ?, is_active = ?, 
+                        certificate = ?, types_cert = ?
+                        WHERE id_personal = ?");
+                    $stmt->bind_param("ssssssssiiisi", $prename, $name, $surname, $position, $department, $email, $phone, $extension, $updated_by, $is_active, $certificate, $types_cert, $id_personal);
                 }
             
                 if ($stmt->execute()) {
