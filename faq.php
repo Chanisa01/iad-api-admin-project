@@ -68,11 +68,12 @@ if ($method === 'POST') {
     if ($action === 'insert') {
         $title = $_POST['title'];
         $description = $_POST['description'];
+        $types_faq = $_POST['types_faq'];
         $uploaded_at = $_POST['uploaded_at'];
         $is_active = $_POST['is_active'] ?? 1;
 
-        $stmt = $conn->prepare("INSERT INTO faqs (title, description, uploaded_at, updated_by, is_active) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssii", $title, $description, $uploaded_at, $updated_by, $is_active);
+        $stmt = $conn->prepare("INSERT INTO faqs (title, description, uploaded_at, updated_by, is_active, types_faq) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssiii", $title, $description, $uploaded_at, $updated_by, $is_active, $types_faq);
         if ($stmt->execute()) {
             $faq_id = $stmt->insert_id;
 
@@ -88,7 +89,7 @@ if ($method === 'POST') {
 
             echo json_encode(["success" => true]);
         } else {
-            echo json_encode(["success" => false, "message" => "Insert failed"]);
+            echo json_encode(["success" => false, "message" => "Insert failed", "error" => $stmt->error]);
         }
     }
 
@@ -96,11 +97,12 @@ if ($method === 'POST') {
         $id = $_POST['id'];
         $title = $_POST['title'];
         $description = $_POST['description'];
+        $types_faq = $_POST['types_faq'];
         $uploaded_at = $_POST['uploaded_at'];
         $is_active = $_POST['is_active'] ?? 1;
 
-        $stmt = $conn->prepare("UPDATE faqs SET title=?, description=?, uploaded_at=?, updated_by=?, is_active=? WHERE id=?");
-        $stmt->bind_param("sssiii", $title, $description, $uploaded_at, $updated_by, $is_active, $id);
+        $stmt = $conn->prepare("UPDATE faqs SET title=?, description=?, uploaded_at=?, types_faq=?, updated_by=?, is_active=? WHERE id=?");
+        $stmt->bind_param("sssiiii", $title, $description, $uploaded_at, $types_faq, $updated_by, $is_active, $id);
         $success = $stmt->execute();
 
         echo json_encode(["success" => $success]);
